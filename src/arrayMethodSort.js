@@ -3,22 +3,23 @@
 function applyCustomSort() {
   [].__proto__.sort2 = function (compareFn) {
     // зберігаємо функцію у змінну compare.
-    const compare =
-      compareFn ||
-      ((a, b) => {
-        const aStr = String(a);
-        const bStr = String(b);
+    const compare = compareFn || defaultCompare;
 
-        if (aStr > bStr) {
-          return 1;
-        }
+    // in case compareFn is not provided
+    function defaultCompare(a, b) {
+      const aStr = String(a);
+      const bStr = String(b);
 
-        if (aStr < bStr) {
-          return -1;
-        }
+      if (aStr > bStr) {
+        return 1;
+      }
 
-        return 0;
-      });
+      if (aStr < bStr) {
+        return -1;
+      }
+
+      return 0;
+    }
 
     // We need maximum of n - 1 passes to sort everything.
     // After each iteration, the greatest value (in case ascending order)
